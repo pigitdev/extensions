@@ -34,6 +34,13 @@ USES = {
     "icon-themes": ("contributes", "iconThemes"),
     "interface-icons": ("pigit", "interfaceIcons"),
 }
+# The one use package.json declares nothing for: the program the entry's
+# own `[server]` names, which PiGit starts in the place of the extension's
+# script.
+SERVER = "language-server"
+# What `[server]` may hold, and the most words it is started or asked with.
+SERVER_KEYS = {"id", "language", "grammars", "program", "args", "version", "runs"}
+MAX_WORDS = 32
 # The platforms a package may be pinned for. `any` is one package for all.
 PLATFORMS = {
     "any",
@@ -67,7 +74,7 @@ def read_entry(path):
     """One entry, checked as far as its own text goes."""
     with open(path, "rb") as file:
         entry = tomllib.load(file)
-    unknown = set(entry) - {"id", "version", "summary", "uses", "package"}
+    unknown = set(entry) - {"id", "version", "summary", "uses", "package", "server"}
     if unknown:
         raise Refused(f"it has keys the registry does not read: {sorted(unknown)}")
     ident = entry.get("id")
@@ -86,8 +93,12 @@ def read_entry(path):
     uses = entry.get("uses")
     if not isinstance(uses, list) or not uses or len(set(uses)) != len(uses):
         raise Refused("`uses` lists what PiGit may use, each once")
-    if not set(uses) <= set(USES):
-        raise Refused(f"`uses` may hold {sorted(USES)}")
+    if not set(uses) <= set(USES) | {SERVER}:
+        raise Refused(f"`uses` may hold {sorted(set(USES) | {SERVER})}")
+    if ("server" in entry) != (SERVER in uses):
+        raise Refused(f"`[server]` and `{SERVER}` in `uses` go together")
+    if "server" in entry:
+        entry["server"] = read_server(entry["server"])
     packages = entry.get("package")
     if not isinstance(packages, dict) or not packages:
         raise Refused("it pins no package")
@@ -107,6 +118,39 @@ def read_entry(path):
         if not isinstance(size, int) or isinstance(size, bool) or not 0 < size <= MAX_PACKAGE:
             raise Refused(f"package.{platform}: size is the package's bytes, at most {MAX_PACKAGE}")
     return entry
+
+
+def read_server(server):
+    """An entry's `[server]`, checked and with its program's path made plain."""
+    if not isinstance(server, dict) or not set(server) <= SERVER_KEYS:
+        raise Refused(f"`[server]` may hold {sorted(SERVER_KEYS)}")
+    if not plain(server.get("id")):
+        raise Refused("server.id is the server's own name, as a folder could be named")
+    language = server.get("language")
+    if not isinstance(language, str) or not language.strip() or "\n" in language:
+        raise Refused("server.language is the language as a person names it")
+    words = {}
+    for key in ("grammars", "args", "version"):
+        value = server.get(key, [])
+        if (
+            not isinstance(value, list)
+            or len(value) > MAX_WORDS
+            or not all(isinstance(word, str) and word for word in value)
+        ):
+            raise Refused(f"server.{key} is a list of at most {MAX_WORDS} words")
+        words[key] = value
+    if not words["grammars"]:
+        raise Refused("server.grammars names the grammars or file endings it reads")
+    program = inside(server.get("program", "")) if isinstance(server.get("program"), str) else None
+    if program is None:
+        raise Refused("server.program is a path inside the package")
+    runs = server.get("runs")
+    if runs is not None and (not isinstance(runs, str) or not 0 < len(runs) <= 200 or "\n" in runs):
+        raise Refused("server.runs is one line of at most 200 characters")
+    read = {"id": server["id"], "language": language.strip(), "program": program, **words}
+    if runs is not None:
+        read["runs"] = runs
+    return read
 
 
 class HttpsOnly(urllib.request.HTTPRedirectHandler):
@@ -217,6 +261,13 @@ def read_package(entry, data, platform):
             if not kept:
                 raise Refused(f"`uses` names {use}, and package.{platform} brings none")
             brings[use] = kept
+    server = entry.get("server")
+    if server is not None:
+        # the program is a plain file of this platform's package: PiGit makes
+        # that one file runnable and starts nothing else
+        info = files.get(f"extension/{server['program']}")
+        if info is None or info.is_dir() or info.file_size == 0:
+            raise Refused(f"package.{platform} does not hold the server at {server['program']}")
     contributes = manifest.get("contributes") or {}
     left_out = {
         "script": "main" in manifest or "browser" in manifest,
@@ -244,6 +295,7 @@ def read_package(entry, data, platform):
         "uses": entry["uses"],
         "brings": brings,
         "leftOut": left_out,
+        **({"server": server} if server is not None else {}),
     }, icon
 
 

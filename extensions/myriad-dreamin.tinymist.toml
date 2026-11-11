@@ -1,0 +1,31 @@
+id = "myriad-dreamin.tinymist"
+version = "0.15.12"
+summary = "The Typst language server: problems, hover and completion in Typst files."
+uses = ["language-server"]
+
+[server]
+id = "tinymist"
+language = "Typst"
+grammars = ["typst"]
+program = "out/tinymist"
+version = ["--version"]
+
+[package.linux-x64]
+url = "https://open-vsx.org/api/myriad-dreamin/tinymist/linux-x64/0.15.12/file/myriad-dreamin.tinymist-0.15.12@linux-x64.vsix"
+sha256 = "9c7f5e092e86472a480d9fab866adcb261d7a396ece1f2ddf780db8d70705927"
+size = 35394632
+
+[package.linux-arm64]
+url = "https://open-vsx.org/api/myriad-dreamin/tinymist/linux-arm64/0.15.12/file/myriad-dreamin.tinymist-0.15.12@linux-arm64.vsix"
+sha256 = "c281fce684be2058537d9108672d9f5308a8eeb9f5103cb1e88032da70e5c334"
+size = 32810797
+
+[package.darwin-arm64]
+url = "https://open-vsx.org/api/myriad-dreamin/tinymist/darwin-arm64/0.15.12/file/myriad-dreamin.tinymist-0.15.12@darwin-arm64.vsix"
+sha256 = "ac4e378fd3aa26bd59d67084658dddf7df5eed7a886fba46dd4dcf0c7a53843c"
+size = 33340236
+
+[package.darwin-x64]
+url = "https://open-vsx.org/api/myriad-dreamin/tinymist/darwin-x64/0.15.12/file/myriad-dreamin.tinymist-0.15.12@darwin-x64.vsix"
+sha256 = "d15c32dd215610a4aba5d4d7be5a0ab91b0333332d1d54713a4c1036f50b5a71"
+size = 34769760

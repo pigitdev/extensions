@@ -93,6 +93,9 @@ class Entries(unittest.TestCase):
             (self.GOOD.replace('"a' , '"A'), "hex"),
             (self.GOOD.replace("size = 10", "size = 0"), "size"),
             (self.GOOD.replace("colour-themes", "scripts"), "may hold"),
+            # a server and the use that lets PiGit start it go together
+            (self.GOOD.replace('["colour-themes"]', '["language-server"]'), "go together"),
+            (self.GOOD + '[server]\nid = "x"\n', "go together"),
             (self.GOOD.replace("someone.night", "Someone.night"), "lower case"),
             (self.GOOD.replace("[package.any]", "[package.amiga]"), "pinned for"),
             (self.GOOD + 'extra = "x"\n', "exactly"),
@@ -104,6 +107,43 @@ class Entries(unittest.TestCase):
         # the file is named after the extension it pins
         with self.assertRaises(registry.Refused):
             registry.read_entry(self.write("other.toml", self.GOOD))
+
+
+    SERVING = GOOD.replace('["colour-themes"]', '["language-server"]') + (
+        '[server]\nid = "lang-server"\nlanguage = "Lang"\ngrammars = ["lang"]\n'
+        'program = "./server/lang-server"\nversion = ["--version"]\n'
+    )
+
+    def test_an_entry_names_the_one_program_pigit_may_start(self):
+        entry = registry.read_entry(self.write("someone.night.toml", self.SERVING))
+        self.assertEqual(
+            entry["server"],
+            {
+                "id": "lang-server",
+                "language": "Lang",
+                "program": "server/lang-server",
+                "grammars": ["lang"],
+                "args": [],
+                "version": ["--version"],
+            },
+        )
+
+    def test_a_server_is_refused_for_what_it_gets_wrong(self):
+        for changed, why in [
+            (self.SERVING.replace("./server/lang-server", "../../bin/sh"), "inside the package"),
+            (self.SERVING.replace("./server/lang-server", "/bin/sh"), "inside the package"),
+            (self.SERVING.replace('program = "./server/lang-server"\n', ""), "inside the package"),
+            (self.SERVING.replace('id = "lang-server"', 'id = "../x"'), "server.id"),
+            (self.SERVING.replace('language = "Lang"', 'language = " "'), "server.language"),
+            (self.SERVING.replace('grammars = ["lang"]', "grammars = []"), "server.grammars"),
+            (self.SERVING.replace('["--version"]', '"--version"'), "server.version"),
+            (self.SERVING + "args = [1]\n", "server.args"),
+            (self.SERVING + 'script = "./out/main.js"\n', "may hold"),
+            (self.SERVING + 'runs = ""\n', "server.runs"),
+        ]:
+            with self.assertRaises(registry.Refused, msg=why) as refused:
+                registry.read_entry(self.write("someone.night.toml", changed))
+            self.assertIn(why, str(refused.exception))
 
 
 class Packages(unittest.TestCase):
@@ -145,6 +185,30 @@ class Packages(unittest.TestCase):
         entry, data = package(manifest=bare)
         with self.assertRaisesRegex(registry.Refused, "licence"):
             registry.read_package(entry, data, "any")
+
+    def test_a_server_must_be_a_file_of_every_package_pinned(self):
+        server = {
+            "id": "lang-server",
+            "language": "Lang",
+            "program": "server/lang-server",
+            "grammars": ["lang"],
+            "args": [],
+            "version": ["--version"],
+        }
+        entry, data = package(extra=[("extension/server/lang-server", b"\x7fELF")])
+        entry = dict(entry, uses=["language-server"], server=server)
+        described, _ = registry.read_package(entry, data, "any")
+        # it brings no theme that PiGit uses, and the index says what is started
+        self.assertEqual(described["brings"], {})
+        self.assertEqual(described["server"], server)
+        self.assertEqual(described["uses"], ["language-server"])
+        # a package without the program, with a folder in its place, or with
+        # an empty file there, is refused
+        for extra in ([], [("extension/server/lang-server/", b"")], [("extension/server/lang-server", b"")]):
+            other, data = package(extra=extra)
+            other = dict(other, uses=["language-server"], server=server)
+            with self.assertRaisesRegex(registry.Refused, "does not hold the server"):
+                registry.read_package(other, data, "any")
 
     def test_a_path_stays_inside_its_folder(self):
         self.assertEqual(registry.inside("./themes/a.json"), "themes/a.json")

@@ -1,0 +1,31 @@
+id = "rust-lang.rust-analyzer"
+version = "0.3.3113"
+summary = "The Rust language server: type hints, problems and completion in Rust files."
+uses = ["language-server"]
+
+[server]
+id = "rust-analyzer"
+language = "Rust"
+grammars = ["rust"]
+program = "server/rust-analyzer"
+version = ["--version"]
+
+[package.linux-x64]
+url = "https://github.com/rust-lang/rust-analyzer/releases/download/2026-11-09/rust-analyzer-linux-x64.vsix"
+sha256 = "c61de3efb461118516d4c523713baffca1fbdf8255e43fbb1a6c3dd709dab895"
+size = 16947595
+
+[package.linux-arm64]
+url = "https://github.com/rust-lang/rust-analyzer/releases/download/2026-11-09/rust-analyzer-linux-arm64.vsix"
+sha256 = "63865e97ff8a4f62f3de51fbdbce7224608bee1fa09816df25967a717904ba06"
+size = 16600920
+
+[package.darwin-arm64]
+url = "https://github.com/rust-lang/rust-analyzer/releases/download/2026-11-09/rust-analyzer-darwin-arm64.vsix"
+sha256 = "103be5b0ed1cc6b1f064fdf19ebe3914b6b66a58dbae2fb4d9e503f318cc44dd"
+size = 15806448
+
+[package.darwin-x64]
+url = "https://github.com/rust-lang/rust-analyzer/releases/download/2026-11-09/rust-analyzer-darwin-x64.vsix"
+sha256 = "9f31f3801b657896825239dc52b9c33240eaeb1f23bed0a8e18a3fd46179b7c6"
+size = 16282923

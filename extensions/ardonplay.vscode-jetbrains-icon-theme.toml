@@ -1,0 +1,9 @@
+id = "ardonplay.vscode-jetbrains-icon-theme"
+version = "0.0.4"
+summary = "The file and folder icons of JetBrains IDEs, in the classic look and the new UI of 2023 and later."
+uses = ["icon-themes"]
+
+[package.any]
+url = "https://open-vsx.org/api/ardonplay/vscode-jetbrains-icon-theme/0.0.4/file/ardonplay.vscode-jetbrains-icon-theme-0.0.4.vsix"
+sha256 = "998d5b28669bcf41b5e3c00e46f106994856a3c2bd130b3e043dfc4faf88c60f"
+size = 883162

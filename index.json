@@ -1,0 +1,297 @@
+{
+ "format": 1,
+ "extensions": [
+  {
+   "id": "ardonplay.vscode-jetbrains-icon-theme",
+   "publisher": "ardonplay",
+   "name": "vscode-jetbrains-icon-theme",
+   "version": "0.0.4",
+   "displayName": "JetBrains Icon Theme",
+   "summary": "The file and folder icons of JetBrains IDEs, in the classic look and the new UI of 2023 and later.",
+   "licence": "MIT",
+   "repository": "https://github.com/ardonplay/vscode-jetbrains-icon-theme",
+   "uses": [
+    "icon-themes"
+   ],
+   "brings": {
+    "icon-themes": [
+     {
+      "id": "vscode-jetbrains-icon-theme",
+      "label": "JetBrains Icon Theme v1 Dark"
+     },
+     {
+      "id": "vscode-jetbrains-icon-theme-2023-light",
+      "label": "JetBrains Icon Theme 2023+ UI Light"
+     },
+     {
+      "id": "vscode-jetbrains-icon-theme-2023-dark",
+      "label": "JetBrains Icon Theme 2023+ UI Dark"
+     },
+     {
+      "id": "vscode-jetbrains-icon-theme-2023-auto",
+      "label": "JetBrains Icon Theme 2023+ UI Auto"
+     }
+    ]
+   },
+   "leftOut": {
+    "script": false,
+    "settings": false,
+    "commands": 0,
+    "grammars": 0,
+    "fontIcons": 0
+   },
+   "icon": "icons/ardonplay.vscode-jetbrains-icon-theme.png",
+   "packages": {
+    "any": {
+     "url": "https://open-vsx.org/api/ardonplay/vscode-jetbrains-icon-theme/0.0.4/file/ardonplay.vscode-jetbrains-icon-theme-0.0.4.vsix",
+     "sha256": "998d5b28669bcf41b5e3c00e46f106994856a3c2bd130b3e043dfc4faf88c60f",
+     "size": 883162
+    }
+   }
+  },
+  {
+   "id": "catppuccin.catppuccin-vsc-icons",
+   "publisher": "Catppuccin",
+   "name": "catppuccin-vsc-icons",
+   "version": "1.26.0",
+   "displayName": "Catppuccin Icons for VSCode",
+   "summary": "Soothing pastel icons for files and folders, in the four Catppuccin flavours.",
+   "licence": "MIT",
+   "repository": "https://github.com/catppuccin/vscode-icons",
+   "uses": [
+    "icon-themes"
+   ],
+   "brings": {
+    "icon-themes": [
+     {
+      "id": "catppuccin-mocha",
+      "label": "Catppuccin Mocha"
+     },
+     {
+      "id": "catppuccin-latte",
+      "label": "Catppuccin Latte"
+     },
+     {
+      "id": "catppuccin-frappe",
+      "label": "Catppuccin Frappé"
+     },
+     {
+      "id": "catppuccin-macchiato",
+      "label": "Catppuccin Macchiato"
+     }
+    ]
+   },
+   "leftOut": {
+    "script": true,
+    "settings": true,
+    "commands": 1,
+    "grammars": 0,
+    "fontIcons": 0
+   },
+   "icon": "icons/catppuccin.catppuccin-vsc-icons.png",
+   "packages": {
+    "any": {
+     "url": "https://open-vsx.org/api/Catppuccin/catppuccin-vsc-icons/1.26.0/file/Catppuccin.catppuccin-vsc-icons-1.26.0.vsix",
+     "sha256": "57566136d0a8ba8d040eb6e5be866c88ccbb04f3d219d3a7e52a19978900ff3d",
+     "size": 1946592
+    }
+   }
+  },
+  {
+   "id": "catppuccin.catppuccin-vsc",
+   "publisher": "Catppuccin",
+   "name": "catppuccin-vsc",
+   "version": "3.19.0",
+   "displayName": "Catppuccin for VSCode",
+   "summary": "A soothing pastel colour theme in four flavours, three dark and one light.",
+   "licence": "MIT",
+   "repository": "https://github.com/catppuccin/vscode.git",
+   "uses": [
+    "colour-themes"
+   ],
+   "brings": {
+    "colour-themes": [
+     {
+      "label": "Catppuccin Mocha",
+      "base": "dark"
+     },
+     {
+      "label": "Catppuccin Macchiato",
+      "base": "dark"
+     },
+     {
+      "label": "Catppuccin Frappé",
+      "base": "dark"
+     },
+     {
+      "label": "Catppuccin Latte",
+      "base": "light"
+     }
+    ]
+   },
+   "leftOut": {
+    "script": true,
+    "settings": true,
+    "commands": 0,
+    "grammars": 0,
+    "fontIcons": 0
+   },
+   "icon": "icons/catppuccin.catppuccin-vsc.png",
+   "packages": {
+    "any": {
+     "url": "https://open-vsx.org/api/Catppuccin/catppuccin-vsc/3.19.0/file/Catppuccin.catppuccin-vsc-3.19.0.vsix",
+     "sha256": "ebf347664837edbe91c9920ff3d14c96d4a28beeec0b95137c76058326329780",
+     "size": 132230
+    }
+   }
+  },
+  {
+   "id": "myriad-dreamin.tinymist",
+   "publisher": "myriad-dreamin",
+   "name": "tinymist",
+   "version": "0.15.12",
+   "displayName": "Tinymist Typst",
+   "summary": "The Typst language server: problems, hover and completion in Typst files.",
+   "licence": "Apache-2.0",
+   "repository": "https://github.com/Myriad-Dreamin/tinymist.git",
+   "uses": [
+    "language-server"
+   ],
+   "brings": {},
+   "leftOut": {
+    "script": true,
+    "settings": true,
+    "commands": 34,
+    "grammars": 3,
+    "fontIcons": 0
+   },
+   "server": {
+    "id": "tinymist",
+    "language": "Typst",
+    "program": "out/tinymist",
+    "grammars": [
+     "typst"
+    ],
+    "args": [],
+    "version": [
+     "--version"
+    ]
+   },
+   "icon": "icons/myriad-dreamin.tinymist.png",
+   "packages": {
+    "linux-x64": {
+     "url": "https://open-vsx.org/api/myriad-dreamin/tinymist/linux-x64/0.15.12/file/myriad-dreamin.tinymist-0.15.12@linux-x64.vsix",
+     "sha256": "9c7f5e092e86472a480d9fab866adcb261d7a396ece1f2ddf780db8d70705927",
+     "size": 35394632
+    },
+    "linux-arm64": {
+     "url": "https://open-vsx.org/api/myriad-dreamin/tinymist/linux-arm64/0.15.12/file/myriad-dreamin.tinymist-0.15.12@linux-arm64.vsix",
+     "sha256": "c281fce684be2058537d9108672d9f5308a8eeb9f5103cb1e88032da70e5c334",
+     "size": 32810797
+    },
+    "darwin-arm64": {
+     "url": "https://open-vsx.org/api/myriad-dreamin/tinymist/darwin-arm64/0.15.12/file/myriad-dreamin.tinymist-0.15.12@darwin-arm64.vsix",
+     "sha256": "ac4e378fd3aa26bd59d67084658dddf7df5eed7a886fba46dd4dcf0c7a53843c",
+     "size": 33340236
+    },
+    "darwin-x64": {
+     "url": "https://open-vsx.org/api/myriad-dreamin/tinymist/darwin-x64/0.15.12/file/myriad-dreamin.tinymist-0.15.12@darwin-x64.vsix",
+     "sha256": "d15c32dd215610a4aba5d4d7be5a0ab91b0333332d1d54713a4c1036f50b5a71",
+     "size": 34769760
+    }
+   }
+  },
+  {
+   "id": "pkief.material-icon-theme",
+   "publisher": "PKief",
+   "name": "material-icon-theme",
+   "version": "5.40.0",
+   "displayName": "Material Icon Theme",
+   "summary": "Material Design icons for files and folders.",
+   "licence": "MIT",
+   "repository": "git+https://github.com/material-extensions/vscode-material-icon-theme.git",
+   "uses": [
+    "icon-themes"
+   ],
+   "brings": {
+    "icon-themes": [
+     {
+      "id": "material-icon-theme",
+      "label": "Material Icon Theme"
+     }
+    ]
+   },
+   "leftOut": {
+    "script": true,
+    "settings": true,
+    "commands": 11,
+    "grammars": 0,
+    "fontIcons": 0
+   },
+   "icon": "icons/pkief.material-icon-theme.png",
+   "packages": {
+    "any": {
+     "url": "https://open-vsx.org/api/PKief/material-icon-theme/5.40.0/file/PKief.material-icon-theme-5.40.0.vsix",
+     "sha256": "55b565f200881abfd807baf9be52fce45fd52fef013ba71b0f8394984ce1ae06",
+     "size": 893199
+    }
+   }
+  },
+  {
+   "id": "rust-lang.rust-analyzer",
+   "publisher": "rust-lang",
+   "name": "rust-analyzer",
+   "version": "0.3.3113",
+   "displayName": "rust-analyzer",
+   "summary": "The Rust language server: type hints, problems and completion in Rust files.",
+   "licence": "MIT OR Apache-2.0",
+   "repository": "https://github.com/rust-lang/rust-analyzer.git",
+   "uses": [
+    "language-server"
+   ],
+   "brings": {},
+   "leftOut": {
+    "script": true,
+    "settings": true,
+    "commands": 47,
+    "grammars": 1,
+    "fontIcons": 0
+   },
+   "server": {
+    "id": "rust-analyzer",
+    "language": "Rust",
+    "program": "server/rust-analyzer",
+    "grammars": [
+     "rust"
+    ],
+    "args": [],
+    "version": [
+     "--version"
+    ]
+   },
+   "icon": "icons/rust-lang.rust-analyzer.png",
+   "packages": {
+    "linux-x64": {
+     "url": "https://github.com/rust-lang/rust-analyzer/releases/download/2026-11-09/rust-analyzer-linux-x64.vsix",
+     "sha256": "c61de3efb461118516d4c523713baffca1fbdf8255e43fbb1a6c3dd709dab895",
+     "size": 16947595
+    },
+    "linux-arm64": {
+     "url": "https://github.com/rust-lang/rust-analyzer/releases/download/2026-11-09/rust-analyzer-linux-arm64.vsix",
+     "sha256": "63865e97ff8a4f62f3de51fbdbce7224608bee1fa09816df25967a717904ba06",
+     "size": 16600920
+    },
+    "darwin-arm64": {
+     "url": "https://github.com/rust-lang/rust-analyzer/releases/download/2026-11-09/rust-analyzer-darwin-arm64.vsix",
+     "sha256": "103be5b0ed1cc6b1f064fdf19ebe3914b6b66a58dbae2fb4d9e503f318cc44dd",
+     "size": 15806448
+    },
+    "darwin-x64": {
+     "url": "https://github.com/rust-lang/rust-analyzer/releases/download/2026-11-09/rust-analyzer-darwin-x64.vsix",
+     "sha256": "9f31f3801b657896825239dc52b9c33240eaeb1f23bed0a8e18a3fd46179b7c6",
+     "size": 16282923
+    }
+   }
+  }
+ ]
+}
